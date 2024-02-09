@@ -1,0 +1,13 @@
+
+a {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+@media  screen and (max-width: 540px) {
+
+    .centerOnMobile{
+        text-align: center;
+    }
+}
+
