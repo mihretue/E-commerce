@@ -1,4 +1,4 @@
-const { uploadToCloudinary, removeFromCloudinary } = require('../cloudinary')
+// const { uploadToCloudinary, removeFromCloudinary } = require('../cloudinary')
 const Product = require('../models/productModel')
 const asyncHandler = require("express-async-handler")
 

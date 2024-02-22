@@ -1,7 +1,7 @@
 const express = require('express')
 const Product = require("../models/productModel")
 const upload = require("../middleware/upload")
-const { uploadToCloudinary, removeFromCloudinary } = require("../cloudinary")
+// const { uploadToCloudinary, removeFromCloudinary } = require("../cloudinary")
 const routers = express.Router()
 
 const {
@@ -12,6 +12,8 @@ const {
     deleteProduct,
     uploadImage
 } = require('../controllers/productController')
+
+
 // const upload = require('../middleware/upload')
 
 

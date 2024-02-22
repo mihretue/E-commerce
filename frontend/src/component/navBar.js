@@ -2,7 +2,11 @@
 import React from 'react';
 import "../styleing/navbar.css"
 // import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
-import styled from 'styled-components';
+// import styled from 'styled-components';
+import {Link} from "react-router-dom"
+// import About from './about';
+// import LogIn from './login';
+
 
 
 // const a = styled(a)`
@@ -47,7 +51,7 @@ const Navigation = () => {
   </div> */}
   <nav class="navbar navbar-expand-lg bg-white sticky-top navbar-light p-3 shadow-sm">
     <div class="container">
-      <a class="navbar-brand" ><i class="fa-solid fa-shop me-2"></i> <strong>GEAR SHOP</strong></a>
+      <Link class="navbar-brand" to="/about"><i class="fa-solid fa-shop me-2"></i> <strong>GEAR SHOP</strong></Link>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -69,19 +73,19 @@ const Navigation = () => {
         </div>
         <ul class="navbar-nav ms-auto ">
           <li class="nav-item">
-            <a class="nav-link mx-2 text-uppercase active" aria-current="page" >Offers</a>
+            <Link class="nav-link mx-2 text-uppercase active" aria-current="page" >Offers</Link>
           </li>
           <li class="nav-item">
-            <a class="nav-link mx-2 text-uppercase" >Products</a>
+            <Link class="nav-link mx-2 text-uppercase" >Products</Link>
           </li>
           <li class="nav-item">
-            <a class="nav-link mx-2 text-uppercase" >Catalog</a>
+            <Link class="nav-link mx-2 text-uppercase" >Catalog</Link>
           </li>
           <li class="nav-item">
-            <a class="nav-link mx-2 text-uppercase" >Services</a>
+            <Link class="nav-link mx-2 text-uppercase" >Services</Link>
           </li>
           <li class="nav-item">
-            <a class="nav-link mx-2 text-uppercase" >About</a>
+            <Link class="nav-link mx-2 text-uppercase"  to="/login">Login</Link>
           </li>
         </ul>
         {/* <ul class="navbar-nav ms-auto ">

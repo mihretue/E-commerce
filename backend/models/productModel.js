@@ -30,21 +30,6 @@ const productSchema = mongoose.Schema(
 
 
 
-const userSchema = mongoose.Schema(
-    {
-        Name: {
-            type: String,
-            required: [true, 'Please enter a Name?']
-        },
-        Password: {
-            type: String,
-            required: true,
-        },
-    },
-    {
-        timestamps: true
-    }
-)
 
 
 //this the model for the schema

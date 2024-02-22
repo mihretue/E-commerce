@@ -4,7 +4,8 @@ const mongoose = require("mongoose")
 const cors = require("cors")
 const ProductRoute = require('./routes/productRoute')
 const errorMiddleWare = require('./middleware/errorMiddleWare')
-
+const UserController = require('./controllers/userController')
+const UserRoute = require('./routes/userRoute')
 const uri = process.env.MONGODB_URL
 // String MONgo_Url = process.env.MONGODB_URL
 // MONGODB_URL = "mongodb+srv://mihretunode:lGTOks2gLpaTHpIQ@methane.0fjzoxr.mongodb.net/nodeapi?retryWrites=true&w=majority"
@@ -27,6 +28,7 @@ app.use(express.urlencoded(
 
 
 app.use('/api/products', ProductRoute)
+app.use("/api/users", UserRoute)
 
 
 app.get('/', (req, res)=>{
