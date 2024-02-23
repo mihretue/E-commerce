@@ -18,6 +18,7 @@ const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent')
 const ESLintPlugin = require('eslint-webpack-plugin');
 const paths = require('./paths');
 const modules = require('./modules');
+const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 const getClientEnvironment = require('./env');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin =
@@ -294,6 +295,12 @@ module.exports = function (webpackEnv) {
     },
     resolve: {
       // This allows you to set a fallback for where webpack should look for modules.
+      fallback:{
+        "path": false,
+        "zlib": false,
+        "stream": false,
+        "querystring": false
+      },
       // We placed these paths second because we want `node_modules` to "win"
       // if there are any conflicts. This matches Node resolution mechanism.
       // https://github.com/facebook/create-react-app/issues/253
@@ -321,6 +328,7 @@ module.exports = function (webpackEnv) {
         ...(modules.webpackAliases || {}),
       },
       plugins: [
+        new NodePolyfillPlugin(),
         // Prevents users from importing files from outside of src/ (or node_modules/).
         // This often causes confusion because we only process files within src/ with babel.
         // To fix this, we prevent you from importing files out of src/ -- if you'd like to,
