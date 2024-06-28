@@ -299,7 +299,10 @@ module.exports = function (webpackEnv) {
         "path": false,
         "zlib": false,
         "stream": false,
-        "querystring": false
+        "querystring": false,
+        "url": false,
+        "fs": false,
+        
       },
       // We placed these paths second because we want `node_modules` to "win"
       // if there are any conflicts. This matches Node resolution mechanism.
