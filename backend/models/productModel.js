@@ -1,3 +1,4 @@
+const { data } = require("browserslist");
 const mongoose =  require("mongoose")
 
 
@@ -19,6 +20,7 @@ const productSchema = mongoose.Schema(
             required: true,
         },
         image : {
+            data: Buffer,
             type: String, 
             required: false
         }

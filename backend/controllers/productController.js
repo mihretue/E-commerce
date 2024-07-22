@@ -1,43 +1,86 @@
 // const { uploadToCloudinary, removeFromCloudinary } = require('../cloudinary')
+const multer = require ('multer')
 const Product = require('../models/productModel')
 const asyncHandler = require("express-async-handler")
 
+//set up storage engine for multer
+const storage = multer.diskStorage({
+  destination: './uploads/',
+  filename: (req, file, cb) => {
+    cb(null, `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`);
+  },
+});
+
+//initialize upload
+const upload = multer({
+  storage,
+  limits: { fileSize: 1000000 }, // 1MB limit
+  fileFilter: (req, file, cb) => {
+    const filetypes = /jpeg|jpg|png/;
+    const mimetype = filetypes.test(file.mimetype);
+    const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+
+    if (mimetype && extname) {
+      return cb(null, true);
+    } else {
+      cb('Error: Images Only!');
+    }
+  },
+});
 
 const createProducts = asyncHandler(async(req, res)=>{
     try {
-        const product = await Product.create(req.body)
+        const {productName,quantity,price} = req.body
+        const {file} = req
+
+        const product = new Product({
+            productName,
+            quantity,
+            price,
+            image: {
+                data: file.buffer,
+               type: file.mimetype,
+            }
+        })
+        //save product to database 
+        await product.save()
+        //send created product as response
         res.status(200).json(product)
+
     } catch (error) {
-        res.status(500)
-        throw new Error(error.message)
+        // Log the error for debugging
+    console.error('Error creating product:', error);
+
+    // Send a user-friendly error message
+    res.status(500).json({ message: 'Failed to create product', error: error.message });
     }
 })
 
 
 
-const uploadImage = asyncHandler(
-    async(req, res) => {
-        try {
-            //upload image to cloudinary
-            const data = await uploadToCloudinary(req.file.path, "product-images")
+// const uploadImage = asyncHandler(
+//     async(req, res) => {
+//         try {
+//             //upload image to cloudinary
+//             const data = await uploadToCloudinary(req.file.path, "product-images")
 
-            //save image url and publiId to the data 
-            const {id} = req.params
-            const savedImg = await Product.findByIdAndUpdate(
-                {id: id},
-                {
-                    $set: {
-                        image: data.url,
-                        pulicId: data.public_id,
-                    },
-                }
-            )
-            res.status(200).send("product image uploaded with success!")
-        } catch (error) {
-            res.status(400).send(error)
-        }
-    }
-)
+//             //save image url and publiId to the data 
+//             const {id} = req.params
+//             const savedImg = await Product.findByIdAndUpdate(
+//                 {id: id},
+//                 {
+//                     $set: {
+//                         image: data.url,
+//                         pulicId: data.public_id,
+//                     },
+//                 }
+//             )
+//             res.status(200).send("product image uploaded with success!")
+//         } catch (error) {
+//             res.status(400).send(error)
+//         }
+//     }
+// )
 
 
 
@@ -143,5 +186,5 @@ module.exports = {
     getProduct,
     updateProduct,
     deleteProduct,
-    uploadImage
+    
 }

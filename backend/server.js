@@ -47,14 +47,41 @@ app.use(errorMiddleWare )
 //     res.send('hello node api')
 // })
 
+class ServerSelectionError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = 'ServerSelectionError';
+  }
 
+  assimilateError(originalError) {
+    this.message = originalError.message;
+    this.stack = originalError.stack;
+    this.code = originalError.code;
+    // Add any other properties from the original error you want to retain
+  }
+}
 
 //checking the server is working
-mongoose.set("strictQuery", false);
-mongoose.connect(uri)
-.then(() => {
- console.log('MongoDB connected...')
- 
- app.listen(port, () => console.log(`Server is running on port ${port}`))
-})
-.catch(err => console.error('Could not connect to MongoDB...', err))
+async function connectToDatabase(){
+    try{
+        mongoose.set("strictQuery", false);
+await  mongoose.connect(uri,{
+    useNewUrlParser: true,
+    connectTimeoutMS: 30000,
+    socketTimeoutMS: 30000,
+    serverSelectionTimeoutMS: 30000,
+
+});
+
+    console.log('MongoDB connected...')
+
+    app.listen(port, () => console.log(`Server is running on port ${port}`))
+
+    }
+    catch (err){
+        // const handledError = _handleConnectionErrors(err);
+    console.error('MongoDB connection error:', err);
+    }
+}
+
+connectToDatabase();
